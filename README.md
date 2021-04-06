@@ -62,8 +62,10 @@ const items = [];
 
 inbox.filter((msg) => {
   const { subject, author } = msg;
+  
   if (subject === 'Mockingbird') {
     return author === 'Harper Lee';
+    
   } else {
     return false;
   }
