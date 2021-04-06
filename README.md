@@ -16,20 +16,31 @@ const superPower = new SuperPower();
 :-1: не надо так: :arrow_down:
 
 if (test) {
+  
   thing1();
+  
   thing2();
+
 }
+
 else {
+  
   thing3();
+
 }
  
 :+1: надо так: :arrow_down:
 
 if (test) {
+  
   thing1();
+  
   thing2();
+
 } else {
+  
   thing3();
+
 }
 
 **3. Не вызывай встроенные методы Object.prototype (такие как hasOwnProperty, propertyIsEnumerable, и isPrototypeOf) у самих объектов. Вместо этого вызывай их с помощью call передавая в него объект. Такие встроенные методы могут быть переопределены в объекте и могут работать не так, как они описаны в Object.prototype.**
