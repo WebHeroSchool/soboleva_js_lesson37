@@ -1,4 +1,4 @@
-# h1 JavaScript Style Guide
+# JavaScript Style Guide
 
 **1. Всегда используйте let или const для объявления переменных.**
 
@@ -37,9 +37,12 @@ object.hasOwnProperty(key);
 Object.prototype.hasOwnProperty.call(object, key);
 
 // *еще лучше*
+
 const has = Object.prototype.hasOwnProperty;
 console.log(has.call(object, key));
+
 /*или*/
+
 import has from 'has';
 console.log(has(object, key));
 
@@ -110,6 +113,7 @@ const short = function longUniqueMoreDescriptiveLexicalFoo() {
 };
 
 //*лучше
+
 const foo = () => {};
 
 **7. Не объявляй функцию внутри цикла.**
