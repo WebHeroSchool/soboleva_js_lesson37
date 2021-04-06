@@ -1,65 +1,61 @@
-h1JavaScript Style Guide
+# h1 JavaScript Style Guide
 
 **1. Всегда используйте let или const для объявления переменных.**
 
-íå íàäî òàê: 
+:-1: не надо так: :arrow_down:
 
 SuperPower = new SuperPower();
  
-íàäî òàê:
+:+1: надо так: :arrow_down:
 
 const superPower = new SuperPower();
 
 
-2. Èñïîëüçóé ôèãóðíûå ñêîáêè äëÿ âñåõ ìíîãîñòðî÷íûõ áëîêîâ.
+**2. Используй фигурные скобки для всех многострочных блоков.**
 
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 if (test)
   return false;
-
 function foo() { return false; }
  
-íàäî òàê:
+:+1: надо так: :arrow_down:
 
 if (test) return false;
-
 function bar() {
   return false;
 }
 
-3. Íå âûçûâàé âñòðîåííûå ìåòîäû Object.prototype (òàêèå êàê hasOwnProperty, propertyIsEnumerable, è isPrototypeOf) ó ñàìèõ îáúåêòîâ. Âìåñòî ýòîãî âûçûâàé èõ ñ ïîìîùüþ call ïåðåäàâàÿ â íåãî îáúåêò.
+**3. Не вызывай встроенные методы Object.prototype (такие как hasOwnProperty, propertyIsEnumerable, и isPrototypeOf) у самих объектов. Вместо этого вызывай их с помощью call передавая в него объект. Такие встроенные методы могут быть переопределены в объекте и могут работать не так, как они описаны в Object.prototype.**
 
-Òàêèå âñòðîåííûå ìåòîäû ìîãóò áûòü ïåðåîïðåäåëåíû â îáúåêòå è ìîãóò ðàáîòàòü íå òàê, êàê îíè îïèñàíû â Object.prototype
-
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 object.hasOwnProperty(key);
  
-íàäî òàê:
+:+1: надо так: :arrow_down:
 
 Object.prototype.hasOwnProperty.call(object, key);
 
-// åùå ëó÷øå
+// *еще лучше*
 const has = Object.prototype.hasOwnProperty;
 console.log(has.call(object, key));
-/* èëè*/
+/*или*/
 import has from 'has';
 console.log(has(object, key));
 
-4.Èñïîëüçóé êâàäðàòíûå ñêîáêè [ ] äëÿ îáúÿâëåíèÿ ìàññèâîâ.
+**4.Используй квадратные скобки [ ] для объявления массивов.**
 
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 const items = new Array();
  
-íàäî òàê: 
+:+1: надо так: :arrow_down:
 
 const items = [];
 
-5. Ïðè èñïîëüçîâàíèè ïåðåáèðàþùèõ ìåòîäîâ ìàññèâîâ â êîëëáýêå âñåãäà èñïîëüçóé return äëÿ âîçâðàòà ðåçóëüòàòà êîëëáýêà. Åñëè òåáå íå íóæíî èñïîëüçîâàòü ðåçóëüòàò êîëëáýêà, èñïîëüçóé äëÿ ïåðåáîðà forEach.
+**5. При использовании перебирающих методов массивов в коллбэке всегда используй return для возврата результата коллбэка. Если тебе не нужно использовать результат коллбэка, используй для перебора forEach.**
 
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 inbox.filter((msg) => {
   const { subject, author } = msg;
@@ -74,14 +70,12 @@ inbox.filter((msg) => {
   const flatten = acc.concat(item);
 });
  
-
-íàäî òàê:
+ :+1: надо так: :arrow_down:
 
 [1, 2, 3].map((x) => {
   const y = x + 1;
   return x * y;
 });
-
 
 [1, 2, 3].map((x) => x + 1);
 
@@ -90,102 +84,90 @@ inbox.filter((msg) => {
   return flatten;
 });
 
-
-
 inbox.filter((msg) => {
   const { subject, author } = msg;
   if (subject === 'Mockingbird') {
     return author === 'Harper Lee';
   }
-
   return false;
 });
 
-6.Èñïîëüçóé function expressions (Ôóíêöèîíàëüíîå Âûðàæåíèå) è ïðèñâàèâàé åå ïåðåìåííîé âìåñòî function declarations (Îáúÿâëåíèå Ôóíêöèè). Ëó÷øå: èñïîëüçóé ñòðåëî÷íûå ôóíêöèè.
+**6.Используй function expressions (Функциональное Выражение) и присваивай ее переменной вместо function declarations (Объявление Функции). Лучше: используй стрелочные функции. Это позволит избежать ошибок, если функция будет вызвана до ее объявления.**
 
-Ýòî ïîçâîëèò èçáåæàòü îøèáîê, åñëè ôóíêöèÿ áóäåò âûçâàíà äî åå îáúÿâëåíèÿ. 
-
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 function foo() {
   // ...
 }
-
 const foo = function () {
   // ...
 };
  
-
-íàäî òàê:
+:+1: надо так: :arrow_down:
 
 const short = function longUniqueMoreDescriptiveLexicalFoo() {
   // ...
 };
 
-//ëó÷øå
+//*лучше
 const foo = () => {};
 
-7.Íå îáúÿâëÿé ôóíêöèþ âíóòðè öèêëà.
+**7. Не объявляй функцию внутри цикла.**
 
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 for (let i=10; i; i--) {
   (function() { return i; })();
 }
-
 while(i) {
   const a = function() { return i; };
   a();
 }
  
-íàäî òàê:
+:+1: надо так: :arrow_down:
 
 const a = function() {};
-
 for (let i=10; i; i--) {
   a();
 }
 
-8.Âñåãäà ñòàâü îäèí ïðîáåë ïåðåä () è ïåðåä {} â ôóíêöèÿõ.
+**8.Всегда ставь один пробел перед () и перед {} в функциях.**
 
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 const f = function(){};
 const g = function (){};
 const h = function() {};
  
-
-íàäî òàê:
+ :+1: надо так: :arrow_down:
 
 const x = function () {};
 const y = function a() {};
 
-9.Èñïîëüçóéòå ñòðåëî÷íûå ôóíêöèè äëÿ ïåðåäà÷è êîëëáåêîâ.
+**9. Используйте стрелочные функции для передачи коллбеков.**
 
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 [1, 2, 3].map(function (x) {
   const y = x + 1;
   return x * y;
 });
  
-
-íàäî òàê:
+:+1: надо так: :arrow_down:
 
 [1, 2, 3].map((x) => {
   const y = x + 1;
   return x * y;
 });
 
-10.Íàçûâàé ôóíêöèè-êîíñòðóêòîðû ñ áîëüøîé áóêâû.
+**10. Называй функции-конструкторы с большой буквы.**
 
-íå íàäî òàê:
+:-1: не надо так: :arrow_down:
 
 const colleague = new person();
 const friend = new person.acquaintance();
  
-
-íàäî òàê:
+:+1: надо так: :arrow_down:
 
 const colleague = new Person();
 const friend = new person.Acquaintance();
