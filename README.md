@@ -11,24 +11,25 @@ SuperPower = new SuperPower();
 const superPower = new SuperPower();
 
 
-**2. Используй фигурные скобки для всех многострочных блоков.**
+**2. При использовании конструкции if .. else располагайте else на одной строке со скобкой закрывающей блок if.**
 
 :-1: не надо так: :arrow_down:
 
-if (test)
-
-  return false; 
-  
-function foo() { return false; }
+if (test) {
+  thing1();
+  thing2();
+}
+else {
+  thing3();
+}
  
 :+1: надо так: :arrow_down:
 
-if (test) return false;
-
-function bar() {
-
-  return false;
-  
+if (test) {
+  thing1();
+  thing2();
+} else {
+  thing3();
 }
 
 **3. Не вызывай встроенные методы Object.prototype (такие как hasOwnProperty, propertyIsEnumerable, и isPrototypeOf) у самих объектов. Вместо этого вызывай их с помощью call передавая в него объект. Такие встроенные методы могут быть переопределены в объекте и могут работать не так, как они описаны в Object.prototype.**
